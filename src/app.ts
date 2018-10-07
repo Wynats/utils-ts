@@ -18,7 +18,6 @@ function createFile( data: object) {
       if(err) {
           return console.log(err);
       }
-      console.log("The file was saved!");
     });
   });
 }
@@ -31,18 +30,16 @@ function converToJson( data: string ): object {
       const keys: Array<string>= list[i].split('=')[0].split('.');
       const value: string = list[i].split('=')[1];
       if ( reply[keys[0]] ){
-        reply[keys[0]] = Object.assign(reply[keys[0]],createObject(keys, value, 1,reply[keys[0]]));
+        reply[keys[0]] = {...reply[keys[0]],...createObject(keys, value, 1,reply[keys[0]])}
       } else {
-        reply[keys[0]] = {};
-        reply[keys[0]] = createObject(keys, value, 1);
+        reply[keys[0]] = {...{},...createObject(keys, value, 1)};
       }
     }
   }
-  console.log(reply)
   return reply;
 }
 
-function createObject (keys: Array<string>, value: string, position: number, general?: any) {
+function createObject (keys: Array<string>, value: string, position: number, general?: any): object {
   let reply: any = {};
 
   if(position === keys.length-1){
@@ -51,11 +48,9 @@ function createObject (keys: Array<string>, value: string, position: number, gen
   } else {
     if ( general && general[keys[position]] ){
       const obj = general[keys[position]];
-      reply[keys[position]] = general[keys[position]];
-      reply[keys[position]] = Object.assign(reply[keys[position]],createObject(keys, value, ++position, obj));
+      reply[keys[position]] = {...general[keys[position]],...createObject(keys, value, ++position, obj)};
     } else {
-      reply[keys[position]] = {};
-      reply[keys[position]] = createObject(keys, value, ++position);
+      reply[keys[position]] = {...{},...createObject(keys, value, ++position)};
     }
 
     return reply;
