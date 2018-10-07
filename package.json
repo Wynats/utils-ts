@@ -1,0 +1,14 @@
+{
+  "name": "utils-ts",
+  "author": "Wynats",
+  "version": "0.0.1",
+  "description": "",
+  "scripts": {
+    "convert": "tsc && node ./dist/app.js"
+  },
+  "license": "MIT",
+  "dependencies": {
+    "@types/node": "^10.11.3",
+    "typescript": "^3.1.1"
+  }
+}
